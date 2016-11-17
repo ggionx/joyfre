@@ -10,13 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 Load datasets and libraries, separate categorical and numerical variables
 ```{r load data and library, warning=F,message=F}
-library(data.table)
-library(gridExtra)
-library(corrplot)
-library(GGally)
-library(ggplot2)
-library(e1071)
-setwd("~/Desktop/Project4")
+#library(data.table)
+#library(gridExtra)
+#library(corrplot)
+#library(GGally)
+#library(ggplot2)
+#library(e1071)
+#setwd("~/Desktop/Project4")
 dt_train <- read.csv("train.csv", header = T, stringsAsFactors = T)
 dt_train_cat <- dt_train[,1:117]
 dt_train_cont <- dt_train[,c(1, 118:132)]
