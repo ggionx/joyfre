@@ -1,0 +1,69 @@
+---
+title: "gaggle"
+author: "Yisong Tao"
+date: "11/17/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Load datasets and libraries, separate categorical and numerical variables
+```{r load data and library, warning=F,message=F}
+library(data.table)
+library(gridExtra)
+library(corrplot)
+library(GGally)
+library(ggplot2)
+library(e1071)
+setwd("~/Desktop/Project4")
+dt_train <- read.csv("train.csv", header = T, stringsAsFactors = T)
+dt_train_cat <- dt_train[,1:117]
+dt_train_cont <- dt_train[,c(1, 118:132)]
+```
+levels of factors
+```{r}
+sapply(dt_train[,2:117], function(x) length(unique(x)))
+```
+
+
+2 sample t-tests on 2-level factors on loss
+```{r}
+t_test_train <- data.frame(Var = character(), p_value = numeric())
+for (i in c(2:74)){
+    vecA <- dt_train$loss[dt_train[,i] == "A"]
+    #print(length(vecA))
+    vecB <- dt_train$loss[dt_train[,i] == "B"]
+    #print(length(vecB))
+    var_name <- names(dt_train)[i]
+    temp<-t.test(vecA, vecB, alternative = "two.sided")
+    p <- temp$p.value
+    temp1 <- data.frame(Var = var_name, p_value = p)
+    t_test_train <- rbind(t_test_train, temp1)
+}
+t_test_train$drop <- ifelse(t_test_train$p_value >0.05, TRUE, FALSE)
+sum(t_test_train$drop)  #only 3 insignificant :(
+t_test_train$Var[which(t_test_train$drop == TRUE)] #cat15, cat22, cat70 can be dropped
+```
+
+2 sample t-tests on 2-level factors on log(loss)
+```{r}
+dt_train2 <- dt_train
+dt_train2$LogLoss <- log(dt_train$loss)
+t_test_train_log <- data.frame(Var = character(), p_value = numeric())
+for (i in c(2:74)){
+    vecA <- dt_train2$LogLoss[dt_train2[,i] == "A"]
+    #print(length(vecA))
+    vecB <- dt_train2$LogLoss[dt_train2[,i] == "B"]
+    #print(length(vecB))
+    var_name <- names(dt_train2)[i]
+    temp<-t.test(vecA, vecB, alternative = "two.sided")
+    p <- temp$p.value
+    temp1 <- data.frame(Var = var_name, p_value = p)
+    t_test_train_log <- rbind(t_test_train_log, temp1)
+}
+t_test_train_log$drop <- ifelse(t_test_train_log$p_value >0.05, TRUE, FALSE)
+sum(t_test_train_log$drop)  #only 2 insignificant :(
+t_test_train_log$Var[which(t_test_train_log$drop == TRUE)] #cat15, cat70 can be dropped
+```
+
