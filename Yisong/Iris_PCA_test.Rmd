@@ -1,0 +1,76 @@
+---
+title: "Iris_PCA_test"
+author: "Yisong Tao"
+date: "11/18/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Iris PCA test
+
+Use Iris dataset to check how much principle components change after removing
+1.a noise variable; 2.a redundant variable; 3.a unique variale.
+
+The purpose of this experiment is to see if we can use MCA to remove "bad" variables.
+
+```{r setup dataset}
+set.seed(0)
+data_iris <- iris[,-5]   #load iris data, drop the factor variable
+data_iris$noise <- rnorm(150, mean = 1, sd = 1) #add a noise variable
+data_iris$PL2 <- 2*jitter(data_iris$Petal.Length) + 1 #add a redundant variable
+data_iris$SW_PW <- 0.5*jitter(data_iris$Sepal.Width) + 0.5*jitter(data_iris$Petal.Width) #add another redundant variable
+```
+
+## PCA tests
+
+PCA of all variables:
+```{r pca}
+library(psych)
+prcp <- principal(data_iris, nfactors = 7, rotate = "none")
+prcp$values
+```
+
+Remove a noise variable and run PCA
+```{r pca2}
+data_iris2 <- data_iris[,-5]
+prcp_no_noise <- principal(data_iris2, nfactors = 6, rotate = "none")
+prcp_no_noise$values
+```
+## Removing a varaible will reduce the sum of all principle components by 1, but if the variable is complete noise, the eigenvalue of important principle components won't change much.
+
+Remove a redundant variable and run PCA
+```{r pca3}
+data_iris2 <- data_iris[, -3] # remove Petal.Length variable
+prcp_noPL <- principal(data_iris2, nfactors = 6, rotate = "none")
+prcp_noPL$values
+```
+```{r pca3_1}
+data_iris2 <- data_iris[, -2] # remove Sepal.Width variable
+prcp_noSW <- principal(data_iris2, nfactors = 6, rotate = "none")
+prcp_noSW$values
+```
+```{r pca3_2}
+data_iris2 <- data_iris[, -4] # remove Petal.Width variable
+prcp_noPW <- principal(data_iris2, nfactors = 6, rotate = "none")
+prcp_noPW$values
+```
+
+## Removing a redundant variable will not change the sum of eigenvalues of important principle components.
+
+
+Remove a unique variable
+```{r pca4}
+data_iris_new <- cbind(data_iris, 0.01*c(1:150)) #adding a unique variable
+prcp_new <- principal(data_iris_new, nfactors = 8, rotate = "none")
+prcp_new$values
+```
+compare to:
+```{r}
+prcp$values
+```
+## Removing a unique variable will reduce the sum of eigenvalues of important principle components (by 1).
+
+## We can use MCA to determine if we can drop a redundant or noise variable.
