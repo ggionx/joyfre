@@ -126,16 +126,17 @@ lrn = setHyperPars(lrn,
 rdesc = makeResampleDesc("CV", iters = 3L)
 
 ### Feature selection routine
-ctrl = makeFeatSelControlSequential(method = "sbs", alpha = 0.01) # sequentially removing features, drop the feature if improvement is <0.01 in models.
-#ctrl = makeFeatSelControlRandom(maxit = 100L, prob = 0.5) # random search feature selection
+#ctrl = makeFeatSelControlSequential(method = "sbs", alpha = 0.01) # sequentially removing features, drop the feature if improvement is <0.01 in models.
+ctrl = makeFeatSelControlRandom(maxit = 100L, prob = 0.5) # random search feature selection
 #ctrl = makeFeatSelControlGA(mu = 10L, lambda = 5, crossover.rate = 0.5, mutation.rate = 0.05, maxit = 100L) # feature selection with gene algorithm
 #ctrl = makeFeatSelControlExhaustive() ### very very slow, do not use
 ######################
-
+parallelStartMulticore(8)
 sfeats = selectFeatures(learner = lrn, task = trainTask, resampling = rdesc, control = ctrl,
                         show.info = FALSE)
+parallelStop()
 sfeats
-
+saveRDS(sfeats, "sfeats_random.RDS")
 
 end_time <- Sys.time()
 run_time <- end_time-start_time
