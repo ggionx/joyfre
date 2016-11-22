@@ -1,3 +1,10 @@
+install.packages('mlr')
+install.packages('xgboost')
+install.packages('data.table')
+install.packages('parallelMap')
+install.packages('FeatureHashing')
+install.packages('BBmisc')
+
 library(mlr)
 library(xgboost)
 library(data.table)
