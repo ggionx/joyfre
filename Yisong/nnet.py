@@ -1,3 +1,4 @@
+#nohup python nnet.py &
 
 ''' 
 Author: Danijel Kivaranovic 
