@@ -1,0 +1,38 @@
+/usr/local/lib/python2.7/dist-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+Using TensorFlow backend.
+Traceback (most recent call last):
+  File "nnet.py", line 18, in <module>
+    from keras.models import Sequential
+  File "/usr/local/lib/python2.7/dist-packages/keras/__init__.py", line 2, in <module>
+    from . import backend
+  File "/usr/local/lib/python2.7/dist-packages/keras/backend/__init__.py", line 69, in <module>
+    from .tensorflow_backend import *
+  File "/usr/local/lib/python2.7/dist-packages/keras/backend/tensorflow_backend.py", line 1, in <module>
+    import tensorflow as tf
+ImportError: No module named tensorflow
+/usr/local/lib/python2.7/dist-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+Using TensorFlow backend.
+/usr/local/lib/python2.7/dist-packages/keras/engine/training.py:1480: UserWarning: Epoch comprised more than `samples_per_epoch` samples, which might affect learning results. Set `samples_per_epoch` correctly to avoid this warning.
+  warnings.warn('Epoch comprised more than '
+/usr/local/lib/python2.7/dist-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+Using Theano backend.
+/usr/local/lib/python2.7/dist-packages/keras/engine/training.py:1480: UserWarning: Epoch comprised more than `samples_per_epoch` samples, which might affect learning results. Set `samples_per_epoch` correctly to avoid this warning.
+  warnings.warn('Epoch comprised more than '
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[33898, 43407, 3458, 100139, 60086, 117290, 89806, 7751, 164059, 143297]
+('Dim train', (188318, 1190))
+('Dim test', (125546, 1190))
+('Fold ', 1, '- MAE:', 1117.3761044084004)
+('Fold ', 2, '- MAE:', 1112.6026536020427)
+('Fold ', 3, '- MAE:', 1137.5126267367534)
+('Fold ', 4, '- MAE:', 1147.6389636327701)
+('Fold ', 5, '- MAE:', 1133.9055685680846)
+('Fold ', 6, '- MAE:', 1112.6351571816353)
+('Fold ', 7, '- MAE:', 1124.9504898813484)
+('Fold ', 8, '- MAE:', 1171.6471112078048)
+('Fold ', 9, '- MAE:', 1125.8113680182537)
+('Fold ', 10, '- MAE:', 1122.9161986590973)
+('Total - MAE:', 1130.6996914783631)
